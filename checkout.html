@@ -262,12 +262,22 @@
     orderSuccess.classList.add("active");
 
     if (paymentMethod === "Google Pay") {
-      const upiLink = makeUpiLink(orderId);
+  const upiLink = makeUpiLink(orderId);
 
-      setTimeout(function() {
-        window.location.href = upiLink;
-      }, 1000);
-    }
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  if (isMobile) {
+    window.location.href = upiLink;
+  } else {
+    alert(
+      "Google Pay / UPI works only on mobile.\n\n" +
+      "Pay manually to this UPI ID:\n" +
+      UPI_ID +
+      "\n\nAmount: " +
+      checkoutTotal.textContent
+    );
+  }
+}
 
     localStorage.setItem("cart", "[]");
     cart = [];
